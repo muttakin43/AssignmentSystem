@@ -17,6 +17,7 @@ namespace AssignmentSystem.Domain.Entities
         public UserRole Role { get; set; } 
 
         public Guid? ClassId { get; set; } 
+        public bool IsActive { get; set; } = true;
         public ClassCourse? Class { get; set; }
         public ICollection<TeacherAssignment> TeacherAssignments { get; set; } = new List<TeacherAssignment>();
 
