@@ -21,6 +21,8 @@ namespace AssignmentSystem.Application.Services
 
             if (user is null)
                 return null;
+            if (!user.IsActive)
+                return null;
 
             var isPasswordValid = passwordHasherService.VerifyPassword(user, loginRequest.Password);
             if (!isPasswordValid)

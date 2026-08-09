@@ -11,6 +11,7 @@ namespace AssignmentSystem.Domain.Entities
     {
         public string Name { get; set; } = string.Empty;
         public bool IsActive { get; set; } = true;
+        public string? Description { get; set; }
 
         public ICollection<User> Students { get; set; } = new List<User>();
         public ICollection<ClassSubject> ClassSubjects { get; set; } = new List<ClassSubject>();

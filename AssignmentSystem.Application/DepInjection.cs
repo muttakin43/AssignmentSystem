@@ -14,6 +14,10 @@ namespace AssignmentSystem.Application
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IClassService, ClassService>();
+            services.AddScoped<ISubjectService, SubjectService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ITeacherAssignmentService, TeacherAssignmentService>();
 
             return services;
         }
