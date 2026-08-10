@@ -23,10 +23,10 @@ namespace AssignmentSystem.Domain.Entities
         public User Teacher { get; set; } = null!;
 
         public DateTime Deadline { get; set; }
-        public int MaxMarks { get; set; }
+        public decimal MaxMarks { get; set; }
         public AssignmentStatus Status { get; set; } = AssignmentStatus.Draft;
         public bool AllowUpdateAfterSubmit { get; set; } = true;
-        public DateTime? UpdatedAt { get; set; }
+       
 
         public ICollection<Submission> Submissions { get; set; } = new List<Submission>();
     }

@@ -17,6 +17,7 @@ namespace AssignmentSystem.Infrastructure.Persistence.Configuration
 
             builder.Property(a => a.Title).IsRequired().HasMaxLength(200);
             builder.Property(a => a.Status).HasConversion<string>().HasMaxLength(20);
+            builder.Property(a => a.MaxMarks) .HasColumnType("decimal(6,2)");
 
             builder.HasOne(a => a.Class)
                    .WithMany(c => c.Assignments)

@@ -18,6 +18,10 @@ namespace AssignmentSystem.Application
             services.AddScoped<ISubjectService, SubjectService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITeacherAssignmentService, TeacherAssignmentService>();
+            services.AddScoped<IAppSettingsService, AppSettingsService>();
+            services.AddScoped<IAssignmentService, AssignmentService>();
+            services.AddScoped<ISubmissionService, SubmissionService>();
+
 
             return services;
         }
