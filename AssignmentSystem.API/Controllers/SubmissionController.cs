@@ -44,7 +44,7 @@ namespace AssignmentSystem.API.Controllers
 
         [HttpPost("assignments/{assignmentId:guid}/submissions")]
         [Authorize(Roles = "Student")]
-        [RequestSizeLimit(20_000_000)] // 20MB সীমা
+        [RequestSizeLimit(20_000_000)] 
         public async Task<IActionResult> Create(
             Guid assignmentId, [FromForm] string? textAnswer, IFormFile? file, CancellationToken ct)
         {

@@ -4,8 +4,10 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using FluentValidation;
 
 namespace AssignmentSystem.Application
 {
@@ -21,6 +23,8 @@ namespace AssignmentSystem.Application
             services.AddScoped<IAppSettingsService, AppSettingsService>();
             services.AddScoped<IAssignmentService, AssignmentService>();
             services.AddScoped<ISubmissionService, SubmissionService>();
+
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
 
             return services;
