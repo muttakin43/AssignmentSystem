@@ -1,0 +1,142 @@
+<div class="login-page">
+
+  <div class="login-background">
+    <div class="background-shape shape-one"></div>
+    <div class="background-shape shape-two"></div>
+  </div>
+
+  <mat-card class="login-card">
+
+    <!-- Header -->
+    <mat-card-header class="login-header">
+      <div class="brand-icon">
+        <mat-icon>school</mat-icon>
+      </div>
+
+      <mat-card-title>Assignment System</mat-card-title>
+      <mat-card-subtitle>
+        Sign in to access your account
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+
+      <form [formGroup]="form" (ngSubmit)="submit()" class="login-form">
+
+        <!-- Email -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email Address</mat-label>
+
+          <mat-icon matPrefix>email</mat-icon>
+
+          <input
+            matInput
+            type="email"
+            formControlName="email"
+            
+          />
+
+          @if (form.get('email')?.hasError('required') &&
+                form.get('email')?.touched) {
+            <mat-error>
+              Email is required
+            </mat-error>
+          }
+
+          @if (form.get('email')?.hasError('email') &&
+                form.get('email')?.touched) {
+            <mat-error>
+              Enter a valid email
+            </mat-error>
+          }
+
+        </mat-form-field>
+
+
+        <!-- Password -->
+        <mat-form-field appearance="outline" class="full-width">
+
+          <mat-label>Password</mat-label>
+
+          <mat-icon matPrefix>lock</mat-icon>
+
+          <input
+            matInput
+            [type]="hidePassword ? 'password' : 'text'"
+            formControlName="password"
+            
+          />
+
+          <button
+            mat-icon-button
+            matSuffix
+            type="button"
+            class="password-toggle"
+            (click)="hidePassword = !hidePassword">
+
+            <mat-icon>
+              {{ hidePassword ? 'visibility_off' : 'visibility' }}
+            </mat-icon>
+
+          </button>
+
+          @if (form.get('password')?.hasError('required') &&
+                form.get('password')?.touched) {
+
+            <mat-error>
+              Password is required
+            </mat-error>
+
+          }
+
+        </mat-form-field>
+
+
+        <!-- Error -->
+        @if (errorMessage()) {
+
+          <div class="error-message">
+
+            <mat-icon>error_outline</mat-icon>
+
+            <span>
+              {{ errorMessage() }}
+            </span>
+
+          </div>
+
+        }
+
+
+        <!-- Login Button -->
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          class="login-button"
+          [disabled]="loading()">
+
+          @if (loading()) {
+
+            <mat-spinner diameter="20"></mat-spinner>
+
+          } @else {
+
+            
+            <span>Sign In</span>
+
+          }
+
+        </button>
+
+      </form>
+
+    </mat-card-content>
+
+    <mat-card-footer class="login-footer">
+      <span>Assignment Management System</span>
+    </mat-card-footer>
+
+  </mat-card>
+
+</div>

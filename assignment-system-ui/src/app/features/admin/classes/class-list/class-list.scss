@@ -1,0 +1,108 @@
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.header-info h2 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.header-info p {
+  margin-top: 4px;
+  color: #64748b;
+}
+
+/* Card */
+
+.table-card {
+  padding: 0;
+  border-radius: 16px;
+  overflow: hidden;
+
+  background: white;
+
+  box-shadow: 0 4px 16px rgba(0, 0, 0, .05);
+}
+
+/* Table */
+
+.full-width {
+  width: 100%;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Header */
+
+.mat-mdc-header-row {
+  background: #f8fafc;
+}
+
+.mat-mdc-header-cell {
+  text-align: center !important;
+  font-weight: 700;
+
+  color: #1e293b;
+
+  border: 1px solid #e2e8f0;
+
+  padding: 16px;
+}
+
+/* Body Cells */
+
+.mat-mdc-cell {
+  text-align: center !important;
+
+  border: 1px solid #e2e8f0;
+
+  padding: 14px;
+}
+
+/* Hover */
+
+.mat-mdc-row:hover {
+  background: #f8fafc;
+}
+
+/* Status */
+
+.status-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.active-chip {
+  background: #dcfce7 !important;
+  color: #15803d !important;
+}
+
+.inactive-chip {
+  background: #fee2e2 !important;
+  color: #dc2626 !important;
+}
+
+/* Actions */
+
+.actions-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Loading */
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+}

@@ -1,0 +1,200 @@
+<div class="page-container">
+
+  <!-- Header -->
+  <div class="page-header">
+
+    <div>
+      <a class="back-link" routerLink="/teacher/assignments">
+        <mat-icon>arrow_back</mat-icon>
+        Back to Assignments
+      </a>
+
+      <h1>{{ assignment()?.title }}</h1>
+
+      <p>
+        Review and grade student submissions
+      </p>
+    </div>
+
+    <div class="header-stats">
+      <mat-card>
+        <h2>{{ submissions().length }}</h2>
+        <span>Submissions</span>
+      </mat-card>
+
+      <mat-card>
+        <h2>{{ assignment()?.maxMarks }}</h2>
+        <span>Max Marks</span>
+      </mat-card>
+    </div>
+
+  </div>
+
+  @if (loading()) {
+
+    <div class="loading-container">
+      <mat-spinner diameter="45"></mat-spinner>
+    </div>
+
+  } @else if (submissions().length === 0) {
+
+    <mat-card class="empty-card">
+
+      <mat-icon>assignment_late</mat-icon>
+
+      <h3>No submissions yet</h3>
+
+      <p>
+        Students have not submitted this assignment.
+      </p>
+
+    </mat-card>
+
+  } @else {
+
+    <mat-card class="table-card">
+
+      <mat-card-content>
+
+        <div class="table-wrapper">
+
+          <table
+            mat-table
+            [dataSource]="submissions()"
+            class="full-width">
+
+            <!-- Student -->
+
+            <ng-container matColumnDef="studentName">
+              <th mat-header-cell *matHeaderCellDef>
+                Student
+              </th>
+
+              <td mat-cell *matCellDef="let s">
+                <strong>{{ s.studentName }}</strong>
+              </td>
+            </ng-container>
+
+            <!-- Submitted -->
+
+            <ng-container matColumnDef="submittedAtUtc">
+              <th mat-header-cell *matHeaderCellDef>
+                Submitted
+              </th>
+
+              <td mat-cell *matCellDef="let s">
+                {{ s.submittedAtUtc | date:'dd MMM yyyy, h:mm a' }}
+              </td>
+            </ng-container>
+
+            <!-- Status -->
+
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef>
+                Status
+              </th>
+
+              <td mat-cell *matCellDef="let s">
+
+                <mat-chip
+                  [ngClass]="{
+                    'graded-chip': s.status === SubmissionStatus.Graded,
+                    'pending-chip': s.status !== SubmissionStatus.Graded
+                  }">
+
+                  {{ s.status }}
+
+                </mat-chip>
+
+              </td>
+            </ng-container>
+
+            <!-- Marks -->
+
+            <ng-container matColumnDef="marksObtained">
+              <th mat-header-cell *matHeaderCellDef>
+                Marks
+              </th>
+
+              <td mat-cell *matCellDef="let s">
+
+                <strong>
+
+                  {{ s.marksObtained !== null
+                  ? s.marksObtained + ' / ' + s.assignmentMaxMarks
+                  : 'Not Graded' }}
+
+                </strong>
+
+              </td>
+            </ng-container>
+
+            <!-- Actions -->
+
+            <ng-container matColumnDef="actions">
+
+              <th mat-header-cell *matHeaderCellDef>
+                Actions
+              </th>
+
+              <td mat-cell *matCellDef="let s">
+
+                <div class="action-buttons">
+                    
+
+                  @if (s.fileName) {
+                    
+
+                    <button
+                      mat-icon-button
+                      color="accent"
+                      (click)="viewFile(s.id)"
+                      matTooltip="Download File">
+
+                      <mat-icon>
+                        attach_file
+                      </mat-icon>
+
+                    </button>
+
+                  }
+
+                  <button
+                    mat-icon-button
+                    color="primary"
+                    (click)="openGradeDialog(s)"
+                    matTooltip="Grade Submission">
+
+                    <mat-icon>
+                      grading
+                    </mat-icon>
+
+                  </button>
+
+                </div>
+
+              </td>
+
+            </ng-container>
+
+            <tr
+              mat-header-row
+              *matHeaderRowDef="displayedColumns">
+            </tr>
+
+            <tr
+              mat-row
+              *matRowDef="let row; columns: displayedColumns;">
+            </tr>
+
+          </table>
+
+        </div>
+
+      </mat-card-content>
+
+    </mat-card>
+
+  }
+
+</div>

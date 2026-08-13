@@ -1,0 +1,144 @@
+<div class="page-header">
+
+  <div class="header-info">
+    <h2>Subjects</h2>
+    <p>Manage subjects and course information</p>
+  </div>
+
+  <button
+    mat-raised-button
+    color="primary"
+    routerLink="/admin/subjects/new">
+
+    <mat-icon>add</mat-icon>
+    New Subject
+
+  </button>
+
+</div>
+
+@if (loading()) {
+
+  <div class="loading-container">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+
+} @else {
+
+  <mat-card class="table-card">
+
+    <table
+      mat-table
+      [dataSource]="subjects()"
+      class="full-width">
+
+      <!-- Name -->
+
+      <ng-container matColumnDef="name">
+
+        <th mat-header-cell *matHeaderCellDef>
+          Name
+        </th>
+
+        <td mat-cell *matCellDef="let subj">
+          {{ subj.name }}
+        </td>
+
+      </ng-container>
+
+      <!-- Code -->
+
+      <ng-container matColumnDef="code">
+
+        <th mat-header-cell *matHeaderCellDef>
+          Code
+        </th>
+
+        <td mat-cell *matCellDef="let subj">
+          {{ subj.code || '—' }}
+        </td>
+
+      </ng-container>
+
+      <!-- Status -->
+
+      <ng-container matColumnDef="isActive">
+
+        <th mat-header-cell *matHeaderCellDef>
+          Status
+        </th>
+
+        <td mat-cell *matCellDef="let subj">
+
+          <div class="status-wrapper">
+
+            <mat-chip
+              [class.active-chip]="subj.isActive"
+              [class.inactive-chip]="!subj.isActive">
+
+              {{ subj.isActive ? 'Active' : 'Inactive' }}
+
+            </mat-chip>
+
+          </div>
+
+        </td>
+
+      </ng-container>
+
+      <!-- Actions -->
+
+      <ng-container matColumnDef="actions">
+
+        <th mat-header-cell *matHeaderCellDef>
+          Actions
+        </th>
+
+        <td mat-cell *matCellDef="let subj">
+
+          <div class="actions-cell">
+
+            <button
+              mat-icon-button
+              color="primary"
+              matTooltip="Edit Subject"
+              [routerLink]="['/admin/subjects', subj.id, 'edit']">
+
+              <mat-icon>edit</mat-icon>
+
+            </button>
+
+            <button
+              mat-icon-button
+              color="warn"
+              matTooltip="Deactivate Subject"
+              (click)="deactivate(subj.id, subj.name)"
+              [disabled]="!subj.isActive">
+
+              <mat-icon>block</mat-icon>
+
+            </button>
+
+          </div>
+
+        </td>
+
+      </ng-container>
+
+      <!-- Rows -->
+
+      <tr
+        mat-header-row
+        *matHeaderRowDef="displayedColumns">
+      </tr>
+
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns;">
+      </tr>
+
+    </table>
+
+  </mat-card>
+
+}

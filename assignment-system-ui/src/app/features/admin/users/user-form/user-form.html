@@ -1,0 +1,191 @@
+<div class="page-header">
+
+  <div class="header-info">
+    <h2>{{ isEditMode() ? 'Edit User' : 'Create User' }}</h2>
+    <p>
+      {{
+        isEditMode()
+          ? 'Update user information and permissions'
+          : 'Add a new user to the system'
+      }}
+    </p>
+  </div>
+
+</div>
+
+<mat-card class="form-card">
+
+  <mat-card-content>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+
+      <div class="form-grid">
+
+        <!-- Full Name -->
+
+        <mat-form-field appearance="outline">
+          <mat-label>Full Name</mat-label>
+
+          <input
+            matInput
+            formControlName="fullName">
+
+          @if (form.get('fullName')?.hasError('required') &&
+          form.get('fullName')?.touched) {
+
+            <mat-error>
+              Full name is required
+            </mat-error>
+
+          }
+
+        </mat-form-field>
+
+        <!-- Email -->
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>Email</mat-label>
+
+          <input
+            matInput
+            type="email"
+            formControlName="email">
+
+          @if (form.get('email')?.hasError('required') &&
+          form.get('email')?.touched) {
+
+            <mat-error>
+              Email is required
+            </mat-error>
+
+          }
+
+          @if (form.get('email')?.hasError('email') &&
+          form.get('email')?.touched) {
+
+            <mat-error>
+              Enter a valid email
+            </mat-error>
+
+          }
+
+        </mat-form-field>
+
+        <!-- Password -->
+
+        @if (!isEditMode()) {
+
+          <mat-form-field appearance="outline">
+
+            <mat-label>Password</mat-label>
+
+            <input
+              matInput
+              type="password"
+              formControlName="password">
+
+            @if (form.get('password')?.hasError('required') &&
+            form.get('password')?.touched) {
+
+              <mat-error>
+                Password is required
+              </mat-error>
+
+            }
+
+            @if (form.get('password')?.hasError('minlength') &&
+            form.get('password')?.touched) {
+
+              <mat-error>
+                Password must be at least 6 characters
+              </mat-error>
+
+            }
+
+          </mat-form-field>
+
+        }
+
+        <!-- Role -->
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>Role</mat-label>
+
+          <mat-select formControlName="role">
+
+            @for (role of roles; track role) {
+
+              <mat-option [value]="role">
+                {{ role }}
+              </mat-option>
+
+            }
+
+          </mat-select>
+
+        </mat-form-field>
+
+      </div>
+
+      <!-- Class -->
+
+      @if (isStudent) {
+
+        <mat-form-field
+          appearance="outline"
+          class="full-width">
+
+          <mat-label>Class</mat-label>
+
+          <mat-select formControlName="classId">
+
+            @for (cls of classes(); track cls.id) {
+
+              <mat-option [value]="cls.id">
+                {{ cls.name }}
+              </mat-option>
+
+            }
+
+          </mat-select>
+
+        </mat-form-field>
+
+      }
+
+      <!-- Actions -->
+
+      <div class="actions">
+
+        <button
+          mat-stroked-button
+          type="button"
+          (click)="cancel()">
+
+          Cancel
+
+        </button>
+
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="loading()">
+
+          <mat-icon>
+            {{ isEditMode() ? 'save' : 'person_add' }}
+          </mat-icon>
+
+          {{ isEditMode() ? 'Update User' : 'Create User' }}
+
+        </button>
+
+      </div>
+
+    </form>
+
+  </mat-card-content>
+
+</mat-card>

@@ -1,0 +1,71 @@
+<mat-toolbar class="navbar">
+
+  <div class="navbar-left">
+    <mat-icon class="logo-icon">school</mat-icon>
+
+    <div class="brand">
+      <span class="brand-title">
+        Assignment System
+      </span>
+    </div>
+  </div>
+
+  <div class="navbar-right">
+
+    <button mat-icon-button class="notification-btn">
+      <mat-icon>notifications</mat-icon>
+    </button>
+
+    <button
+      mat-icon-button
+      class="avatar-btn"
+      [matMenuTriggerFor]="userMenu">
+
+      <div class="user-avatar">
+        {{
+          authService.currentUser()?.fullName
+            ?.charAt(0)
+            ?.toUpperCase()
+        }}
+      </div>
+
+    </button>
+
+    <mat-menu #userMenu="matMenu" xPosition="before">
+
+      <div class="menu-profile">
+
+        <div class="menu-avatar">
+          {{
+            authService.currentUser()?.fullName
+              ?.charAt(0)
+              ?.toUpperCase()
+          }}
+        </div>
+
+        <div class="menu-user-info">
+          <div class="menu-user-name">
+            {{ authService.currentUser()?.fullName }}
+          </div>
+
+          <div class="menu-user-role">
+            {{ authService.currentUser()?.role }}
+          </div>
+        </div>
+
+      </div>
+
+      <mat-divider></mat-divider>
+
+     
+
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+      </button>
+
+    </mat-menu>
+
+  </div>
+
+</mat-toolbar>

@@ -1,0 +1,72 @@
+.page-header {
+  margin-bottom: 24px;
+}
+
+.header-info h2 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.header-info p {
+  margin-top: 4px;
+  color: #64748b;
+}
+
+/* Card */
+
+.form-card {
+  max-width: 900px;
+  margin: 0 auto;
+
+  border-radius: 16px;
+
+  box-shadow: 0 4px 16px rgba(0, 0, 0, .05);
+}
+
+/* Form */
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.full-width {
+  width: 100%;
+  margin-top: 20px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+/* Buttons */
+
+.actions {
+  margin-top: 24px;
+
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.actions button {
+  min-width: 130px;
+  height: 44px;
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-card {
+    max-width: 100%;
+  }
+
+}

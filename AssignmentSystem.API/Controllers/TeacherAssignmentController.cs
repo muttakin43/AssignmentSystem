@@ -16,7 +16,7 @@ namespace AssignmentSystem.API.Controllers
         Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier) ?? User.FindFirstValue("sub")!);
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Teacher")]
         public async Task<IActionResult> GetAll(CancellationToken ct)
         {
             var result = await service.GetAllAsync(ct);

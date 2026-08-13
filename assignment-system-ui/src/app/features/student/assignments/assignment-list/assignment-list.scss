@@ -1,0 +1,86 @@
+.page-header {
+  margin-bottom: 24px;
+}
+
+.header-info h2 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.header-info p {
+  margin-top: 4px;
+  color: #64748b;
+}
+
+.table-card {
+  padding: 0;
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.mat-mdc-table {
+  width: 100%;
+  border: 1px solid #dbe3ea;
+}
+
+.mat-mdc-header-row {
+  background: #f8fafc;
+}
+
+.mat-mdc-header-cell {
+  text-align: center !important;
+  font-weight: 700;
+  color: #1e293b;
+  border: 1px solid #dbe3ea;
+  padding: 16px;
+}
+
+.mat-mdc-cell {
+  text-align: center !important;
+  border: 1px solid #dbe3ea;
+  padding: 14px;
+}
+
+.mat-mdc-row:hover {
+  background: #f8fafc;
+}
+
+.deadline-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.overdue-chip {
+  background: #fee2e2 !important;
+  color: #dc2626 !important;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+}
+
+.empty-card {
+  padding: 24px;
+  text-align: center;
+  border-radius: 16px;
+}
+
+.empty-card p {
+  margin: 0;
+  color: #64748b;
+}
+
+button[mat-raised-button] {
+  border-radius: 8px;
+}

@@ -1,0 +1,31 @@
+<h2 mat-dialog-title>Grade Submission — {{ data.submission.studentName }}</h2>
+
+<mat-dialog-content>
+  @if (data.submission.textAnswer) {
+    <p><strong>Answer:</strong></p>
+    <p class="answer-text">{{ data.submission.textAnswer }}</p>
+  }
+
+  <form [formGroup]="form">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Marks (out of {{ data.maxMarks }})</mat-label>
+      <input matInput type="number" formControlName="marksObtained" />
+      @if (form.get('marksObtained')?.hasError('max')) {
+        <mat-error>Marks cannot exceed {{ data.maxMarks }}</mat-error>
+      }
+      @if (form.get('marksObtained')?.hasError('min')) {
+        <mat-error>Marks cannot be negative</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Feedback</mat-label>
+      <textarea matInput formControlName="feedback" rows="3"></textarea>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="submit()">Save Grade</button>
+</mat-dialog-actions>

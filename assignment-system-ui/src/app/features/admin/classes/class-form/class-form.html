@@ -1,0 +1,115 @@
+<div class="page-header">
+
+  <div class="header-info">
+
+    <h2>
+      {{ isEditMode() ? 'Edit Class' : 'Create Class' }}
+    </h2>
+
+    <p>
+      {{
+        isEditMode()
+          ? 'Update class information and settings'
+          : 'Add a new class to the system'
+      }}
+    </p>
+
+  </div>
+
+</div>
+
+<mat-card class="form-card">
+
+  <mat-card-content>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+
+      <div class="form-grid">
+
+        <!-- Class Name -->
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>Class Name</mat-label>
+
+          <input
+            matInput
+            formControlName="name" />
+
+          @if (form.get('name')?.hasError('required') &&
+          form.get('name')?.touched) {
+
+            <mat-error>
+              Class name is required
+            </mat-error>
+
+          }
+
+        </mat-form-field>
+
+      </div>
+
+      <!-- Description -->
+
+      <mat-form-field
+        appearance="outline"
+        class="full-width">
+
+        <mat-label>Description</mat-label>
+
+        <textarea
+          matInput
+          rows="4"
+          formControlName="description">
+        </textarea>
+
+      </mat-form-field>
+
+      <!-- Active -->
+
+      @if (isEditMode()) {
+
+        <div class="checkbox-section">
+
+          <mat-checkbox formControlName="isActive">
+            Active Class
+          </mat-checkbox>
+
+        </div>
+
+      }
+
+      <!-- Actions -->
+
+      <div class="actions">
+
+        <button
+          mat-stroked-button
+          type="button"
+          (click)="cancel()">
+
+          Cancel
+
+        </button>
+
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="loading()">
+
+          <mat-icon>
+            {{ isEditMode() ? 'save' : 'school' }}
+          </mat-icon>
+
+          {{ isEditMode() ? 'Update Class' : 'Create Class' }}
+
+        </button>
+
+      </div>
+
+    </form>
+
+  </mat-card-content>
+
+</mat-card>

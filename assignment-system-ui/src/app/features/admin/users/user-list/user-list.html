@@ -1,0 +1,233 @@
+<div class="page-header">
+
+  <div class="header-info">
+    <h2>Users</h2>
+    <p>Manage system users and permissions</p>
+  </div>
+
+  <button
+    mat-raised-button
+    color="primary"
+    routerLink="/admin/users/new">
+
+    <mat-icon>add</mat-icon>
+    New User
+
+  </button>
+
+</div>
+
+<!-- FILTERS -->
+
+<mat-card class="filter-card">
+
+  <div class="filters">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Search</mat-label>
+
+      <input
+        matInput
+        [(ngModel)]="search"
+        (keyup.enter)="onFilterChange()"
+        >
+
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+
+      <mat-label>Role</mat-label>
+
+      <mat-select
+        [(ngModel)]="roleFilter"
+        (selectionChange)="onFilterChange()">
+
+        <mat-option value="">
+          All Roles
+        </mat-option>
+
+        @for (role of roles; track role) {
+
+          <mat-option [value]="role">
+            {{ role }}
+          </mat-option>
+
+        }
+
+      </mat-select>
+
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      color="primary"
+      class="search-btn"
+      (click)="onFilterChange()">
+
+      <mat-icon>search</mat-icon>
+      Search
+
+    </button>
+
+  </div>
+
+</mat-card>
+
+@if (loading()) {
+
+  <div class="loading-container">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+
+} @else {
+
+  <mat-card class="table-card">
+
+    <table
+      mat-table
+      [dataSource]="users()"
+      class="full-width">
+
+      <!-- Name -->
+
+      <ng-container matColumnDef="fullName">
+
+        <th mat-header-cell *matHeaderCellDef>
+          Name
+        </th>
+
+        <td mat-cell *matCellDef="let u">
+          {{ u.fullName }}
+        </td>
+
+      </ng-container>
+
+      <!-- Email -->
+
+      <ng-container matColumnDef="email">
+
+        <th mat-header-cell *matHeaderCellDef>
+          Email
+        </th>
+
+        <td mat-cell *matCellDef="let u">
+          {{ u.email }}
+        </td>
+
+      </ng-container>
+
+      <!-- Role -->
+
+      <ng-container matColumnDef="role">
+
+        <th mat-header-cell *matHeaderCellDef>
+          Role
+        </th>
+
+        <td mat-cell *matCellDef="let u">
+          {{ u.role }}
+        </td>
+
+      </ng-container>
+
+      <!-- Class -->
+
+      <ng-container matColumnDef="className">
+
+        <th mat-header-cell *matHeaderCellDef>
+          Class
+        </th>
+
+        <td mat-cell *matCellDef="let u">
+          {{ u.className || '—' }}
+        </td>
+
+      </ng-container>
+
+      <!-- Status -->
+
+      <ng-container matColumnDef="isActive">
+
+        <th mat-header-cell *matHeaderCellDef>
+          Status
+        </th>
+
+        <td mat-cell *matCellDef="let u">
+
+          <div class="status-wrapper">
+
+            <mat-chip
+              [class.active-chip]="u.isActive"
+              [class.inactive-chip]="!u.isActive">
+
+              {{ u.isActive ? 'Active' : 'Inactive' }}
+
+            </mat-chip>
+
+          </div>
+
+        </td>
+
+      </ng-container>
+
+      <!-- Actions -->
+
+      <ng-container matColumnDef="actions">
+
+        <th mat-header-cell *matHeaderCellDef>
+          Actions
+        </th>
+
+        <td mat-cell *matCellDef="let u">
+
+          <div class="actions-cell">
+
+            <button
+              mat-icon-button
+              color="primary"
+              [routerLink]="['/admin/users', u.id, 'edit']">
+
+              <mat-icon>edit</mat-icon>
+
+            </button>
+
+            <button
+              mat-icon-button
+              [color]="u.isActive ? 'warn' : 'primary'"
+              (click)="toggleActive(u)">
+
+              <mat-icon>
+                {{ u.isActive ? 'block' : 'check_circle' }}
+              </mat-icon>
+
+            </button>
+
+          </div>
+
+        </td>
+
+      </ng-container>
+
+      <tr
+        mat-header-row
+        *matHeaderRowDef="displayedColumns">
+      </tr>
+
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns;">
+      </tr>
+
+    </table>
+
+  </mat-card>
+
+  <mat-paginator
+    class="paginator"
+    [length]="totalCount()"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[5,10,25,50]"
+    (page)="onPageChange($event)">
+  </mat-paginator>
+
+}

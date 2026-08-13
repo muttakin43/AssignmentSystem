@@ -1,0 +1,139 @@
+.page-header {
+  margin-bottom: 20px;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.detail-card {
+  padding: 24px;
+  border-radius: 16px;
+}
+
+.assignment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.assignment-header h2 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.assignment-header p {
+  margin-top: 4px;
+  color: #64748b;
+}
+
+.deadline-chip {
+  background: #fee2e2 !important;
+  color: #dc2626 !important;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.info-box {
+  padding: 16px;
+  border: 1px solid #dbe3ea;
+  border-radius: 12px;
+  background: #f8fafc;
+}
+
+.label {
+  display: block;
+  font-size: 13px;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+.value {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.description-card,
+.submission-card,
+.submission-form-card {
+  border: 1px solid #dbe3ea;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.description-card h3,
+.submission-card h3,
+.submission-form-card h3 {
+  margin-top: 0;
+  color: #1e293b;
+}
+
+.submission-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.status-wrapper {
+  margin-top: 8px;
+}
+
+.graded-chip {
+  background: #dcfce7 !important;
+  color: #15803d !important;
+}
+
+.pending-chip {
+  background: #fef3c7 !important;
+  color: #b45309 !important;
+}
+
+.feedback-box {
+  margin: 16px 0;
+  padding: 16px;
+  border-radius: 10px;
+  background: #f8fafc;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.file-upload {
+  margin-bottom: 16px;
+}
+
+.submit-btn {
+  min-width: 180px;
+  height: 48px;
+  border-radius: 10px;
+}
+
+.warning-card {
+  padding: 16px;
+  border-radius: 12px;
+  background: #fee2e2;
+  color: #dc2626;
+  font-weight: 500;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+}

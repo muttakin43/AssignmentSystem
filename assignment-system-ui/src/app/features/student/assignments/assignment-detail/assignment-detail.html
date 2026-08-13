@@ -1,0 +1,238 @@
+<div class="page-header">
+
+  <a
+    routerLink="/student/assignments"
+    class="back-link">
+
+    <mat-icon>arrow_back</mat-icon>
+    Back to Assignments
+
+  </a>
+
+</div>
+
+@if (loading()) {
+
+  <div class="loading-container">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+
+} @else if (assignment()) {
+
+  <mat-card class="detail-card">
+
+    <div class="assignment-header">
+
+      <div>
+
+        <h2>{{ assignment()!.title }}</h2>
+
+        <p>
+          {{ assignment()!.subjectName }}
+        </p>
+
+      </div>
+
+      @if (isDeadlinePassed) {
+
+        <mat-chip class="deadline-chip">
+          Deadline Passed
+        </mat-chip>
+
+      }
+
+    </div>
+
+    <div class="info-grid">
+
+      <div class="info-box">
+
+        <span class="label">
+          Deadline
+        </span>
+
+        <span class="value">
+          {{ assignment()!.deadline | date:'medium' }}
+        </span>
+
+      </div>
+
+      <div class="info-box">
+
+        <span class="label">
+          Max Marks
+        </span>
+
+        <span class="value">
+          {{ assignment()!.maxMarks }}
+        </span>
+
+      </div>
+
+    </div>
+
+    <div class="description-card">
+
+      <h3>Description</h3>
+
+      <p>
+        {{ assignment()!.description }}
+      </p>
+
+    </div>
+
+    @if (mySubmission()) {
+
+      <div class="submission-card">
+
+        <h3>My Submission</h3>
+
+        <div class="submission-grid">
+
+          <div>
+
+            <strong>Status</strong>
+
+            <div class="status-wrapper">
+
+              <mat-chip
+                [class.graded-chip]="mySubmission()!.status === SubmissionStatus.Graded"
+                [class.pending-chip]="mySubmission()!.status !== SubmissionStatus.Graded">
+
+                {{ mySubmission()!.status }}
+
+              </mat-chip>
+
+            </div>
+
+          </div>
+
+          @if (mySubmission()!.status === SubmissionStatus.Graded) {
+
+            <div>
+
+              <strong>Marks</strong>
+
+              <p>
+                {{ mySubmission()!.marksObtained }}
+                /
+                {{ assignment()!.maxMarks }}
+              </p>
+
+            </div>
+
+          }
+
+        </div>
+
+        @if (mySubmission()!.feedback) {
+
+          <div class="feedback-box">
+
+            <strong>Teacher Feedback</strong>
+
+            <p>
+              {{ mySubmission()!.feedback }}
+            </p>
+
+          </div>
+
+        }
+
+        @if (mySubmission()!.fileName) {
+
+          <button
+            mat-stroked-button
+            color="primary"
+            (click)="viewFile()">
+
+            <mat-icon>attach_file</mat-icon>
+
+            {{ mySubmission()!.fileName }}
+
+          </button>
+
+        }
+
+      </div>
+
+    }
+
+    @if (canEdit) {
+
+      <div class="submission-form-card">
+
+        <h3>
+          {{ mySubmission() ? 'Update Submission' : 'Submit Assignment' }}
+        </h3>
+
+        <form
+          [formGroup]="form"
+          class="submit-form">
+
+          <mat-form-field
+            appearance="outline"
+            class="full-width">
+
+            <mat-label>Your Answer</mat-label>
+
+            <textarea
+              matInput
+              rows="6"
+              formControlName="textAnswer">
+            </textarea>
+
+          </mat-form-field>
+
+          <div class="file-upload">
+
+            <input
+              type="file"
+              (change)="onFileSelected($event)">
+
+          </div>
+
+          <button
+            mat-raised-button
+            color="primary"
+            class="submit-btn"
+            [disabled]="submitting()"
+            (click)="submit()">
+
+            {{ mySubmission()
+              ? 'Update Submission'
+              : 'Submit Assignment' }}
+
+          </button>
+
+        </form>
+
+      </div>
+
+    } @else if (!mySubmission()) {
+
+      <div class="warning-card">
+        The deadline has passed. You can no longer submit.
+      </div>
+
+    } @else {
+
+      <div class="warning-card">
+
+        @if (mySubmission()!.status === SubmissionStatus.Graded) {
+
+          This submission has been graded and cannot be edited.
+
+        } @else {
+
+          Updates are not allowed for this submission.
+
+        }
+
+      </div>
+
+    }
+
+  </mat-card>
+
+}

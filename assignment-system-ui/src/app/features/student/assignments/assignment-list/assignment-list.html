@@ -1,0 +1,140 @@
+<div class="page-header">
+
+  <div class="header-info">
+    <h2>My Assignments</h2>
+    <p>View and submit your assigned coursework</p>
+  </div>
+
+</div>
+
+@if (loading()) {
+
+  <div class="loading-container">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+
+} @else if (assignments().length === 0) {
+
+  <mat-card class="empty-card">
+    <p>No assignments available right now.</p>
+  </mat-card>
+
+} @else {
+
+  <mat-card class="table-card">
+
+    <table
+      mat-table
+      [dataSource]="assignments()"
+      class="full-width">
+
+      <!-- Title -->
+
+      <ng-container matColumnDef="title">
+
+        <th mat-header-cell *matHeaderCellDef>
+          Title
+        </th>
+
+        <td mat-cell *matCellDef="let a">
+          {{ a.title }}
+        </td>
+
+      </ng-container>
+
+      <!-- Subject -->
+
+      <ng-container matColumnDef="subjectName">
+
+        <th mat-header-cell *matHeaderCellDef>
+          Subject
+        </th>
+
+        <td mat-cell *matCellDef="let a">
+          {{ a.subjectName }}
+        </td>
+
+      </ng-container>
+
+      <!-- Deadline -->
+
+      <ng-container matColumnDef="deadline">
+
+        <th mat-header-cell *matHeaderCellDef>
+          Deadline
+        </th>
+
+        <td mat-cell *matCellDef="let a">
+
+          <div class="deadline-cell">
+
+            <span>
+              {{ a.deadline | date:'medium' }}
+            </span>
+
+            @if (isOverdue(a.deadline)) {
+
+              <mat-chip class="overdue-chip">
+                Overdue
+              </mat-chip>
+
+            }
+
+          </div>
+
+        </td>
+
+      </ng-container>
+
+      <!-- Max Marks -->
+
+      <ng-container matColumnDef="maxMarks">
+
+        <th mat-header-cell *matHeaderCellDef>
+          Max Marks
+        </th>
+
+        <td mat-cell *matCellDef="let a">
+          {{ a.maxMarks }}
+        </td>
+
+      </ng-container>
+
+      <!-- Actions -->
+
+      <ng-container matColumnDef="actions">
+
+        <th mat-header-cell *matHeaderCellDef>
+          Actions
+        </th>
+
+        <td mat-cell *matCellDef="let a">
+
+          <button
+            mat-raised-button
+            color="primary"
+            [routerLink]="['/student/assignments', a.id]">
+
+            View & Submit
+
+          </button>
+
+        </td>
+
+      </ng-container>
+
+      <tr
+        mat-header-row
+        *matHeaderRowDef="displayedColumns">
+      </tr>
+
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns;">
+      </tr>
+
+    </table>
+
+  </mat-card>
+
+}

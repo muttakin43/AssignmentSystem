@@ -1,0 +1,260 @@
+<div class="header">
+  <div>
+    <h2>Teacher Assignments</h2>
+    <p>Manage teachers assigned to classes and subjects</p>
+  </div>
+</div>
+
+
+<!-- Assign Teacher -->
+<mat-card class="form-card">
+
+  <mat-card-header>
+    <mat-card-title>
+      Assign Teacher to Class & Subject
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+
+    <form
+      [formGroup]="form"
+      (ngSubmit)="submit()"
+      class="assign-form">
+
+      <!-- Teacher -->
+      <mat-form-field appearance="outline">
+        <mat-label>Teacher</mat-label>
+
+        <mat-select formControlName="teacherId">
+
+          @for (teacher of teachers(); track teacher.id) {
+            <mat-option [value]="teacher.id">
+              {{ teacher.fullName }}
+            </mat-option>
+          }
+
+        </mat-select>
+
+      </mat-form-field>
+
+
+      <!-- Class -->
+      <mat-form-field appearance="outline">
+        <mat-label>Class</mat-label>
+
+        <mat-select formControlName="classId">
+
+          @for (cls of classes(); track cls.id) {
+            <mat-option [value]="cls.id">
+              {{ cls.name }}
+            </mat-option>
+          }
+
+        </mat-select>
+
+      </mat-form-field>
+
+
+      <!-- Subject -->
+      <mat-form-field appearance="outline">
+        <mat-label>Subject</mat-label>
+
+        <mat-select formControlName="subjectId">
+
+          @for (subj of subjects(); track subj.id) {
+            <mat-option [value]="subj.id">
+              {{ subj.name }}
+            </mat-option>
+          }
+
+        </mat-select>
+
+      </mat-form-field>
+
+
+      <!-- Assign -->
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="submitting()">
+
+        <mat-icon>person_add</mat-icon>
+
+        {{ submitting() ? 'Assigning...' : 'Assign Teacher' }}
+
+      </button>
+
+    </form>
+
+  </mat-card-content>
+
+</mat-card>
+
+
+<!-- Loading -->
+@if (loading()) {
+
+  <div class="loading-container">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+
+} @else {
+
+  <mat-card class="table-card">
+
+    <mat-card-header>
+      <mat-card-title>Assigned Teachers</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+
+      <div class="table-wrapper">
+
+        <table
+          mat-table
+          [dataSource]="assignments()"
+          class="assignment-table">
+
+
+          <!-- Teacher -->
+          <ng-container matColumnDef="teacherName">
+
+            <th mat-header-cell *matHeaderCellDef>
+              Teacher
+            </th>
+
+            <td mat-cell *matCellDef="let a">
+
+              <div class="teacher-cell">
+
+                <div class="avatar">
+                  <mat-icon>person</mat-icon>
+                </div>
+
+                <span>
+                  {{ a.teacherName }}
+                </span>
+
+              </div>
+
+            </td>
+
+          </ng-container>
+
+
+          <!-- Class -->
+          <ng-container matColumnDef="className">
+
+            <th mat-header-cell *matHeaderCellDef>
+              Class
+            </th>
+
+            <td mat-cell *matCellDef="let a">
+              {{ a.className }}
+            </td>
+
+          </ng-container>
+
+
+          <!-- Subject -->
+          <ng-container matColumnDef="subjectName">
+
+            <th mat-header-cell *matHeaderCellDef>
+              Subject
+            </th>
+
+            <td mat-cell *matCellDef="let a">
+              {{ a.subjectName }}
+            </td>
+
+          </ng-container>
+
+
+          <!-- Status -->
+          <ng-container matColumnDef="isActive">
+
+            <th mat-header-cell *matHeaderCellDef>
+              Status
+            </th>
+
+           <td mat-cell *matCellDef="let a">
+
+  <span
+    class="status-badge"
+    [class.active]="a.isActive"
+    [class.inactive]="!a.isActive">
+
+    {{ a.isActive ? 'Active' : 'Inactive' }}
+
+  </span>
+
+</td>
+
+          </ng-container>
+
+
+          <!-- Actions -->
+          <ng-container matColumnDef="actions">
+
+            <th mat-header-cell *matHeaderCellDef>
+              Actions
+            </th>
+
+            <td mat-cell *matCellDef="let a">
+
+              <div class="actions">
+
+                <button
+                  mat-icon-button
+                  [color]="a.isActive ? 'warn' : 'primary'"
+                  [matTooltip]="
+                    a.isActive
+                      ? 'Deactivate'
+                      : 'Activate'
+                  "
+                  (click)="toggleActive(a)">
+
+                  <mat-icon>
+                    {{
+                      a.isActive
+                        ? 'block'
+                        : 'check_circle'
+                    }}
+                  </mat-icon>
+
+                </button>
+
+              </div>
+
+            </td>
+
+          </ng-container>
+
+
+          <!-- Header -->
+          <tr
+            mat-header-row
+            *matHeaderRowDef="displayedColumns">
+          </tr>
+
+
+          <!-- Rows -->
+          <tr
+            mat-row
+            *matRowDef="
+              let row;
+              columns: displayedColumns;
+            ">
+          </tr>
+
+        </table>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+}

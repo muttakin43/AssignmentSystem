@@ -1,0 +1,104 @@
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+
+  h2 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+  }
+
+  p {
+    margin: 4px 0 0;
+    color: #64748b;
+  }
+}
+
+.form-card,
+.table-card {
+  border-radius: 16px;
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+.submit-btn {
+  width: 100%;
+  height: 56px;
+  font-size: 15px;
+  font-weight: 600;
+
+  grid-column: 1 / -1;
+}
+mat-card-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+mat-card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.create-form {
+  padding-top: 20px;
+
+  display: grid;
+  grid-template-columns:
+    repeat(auto-fit, minmax(250px, 1fr));
+
+  gap: 16px;
+  align-items: center;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  padding: 50px;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+.custom-table {
+  width: 100%;
+}
+
+.custom-table th {
+  text-align: center;
+  font-weight: 700;
+  font-size: 14px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.custom-table td {
+  text-align: center;
+  border: 1px solid #e2e8f0;
+}
+
+.custom-table tr:hover {
+  background: #f8fafc;
+}
+
+.inline-input {
+  width: 100%;
+  padding: 8px 10px;
+
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+
+  outline: none;
+}
+
+.inline-input:focus {
+  border-color: #2563eb;
+}
+
+button[mat-icon-button] {
+  margin: 0 2px;
+}

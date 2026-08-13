@@ -1,0 +1,138 @@
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 24px;
+}
+
+.header-info h2 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.header-info p {
+  margin: 4px 0 0;
+  color: #64748b;
+}
+
+.page-header button {
+  height: 48px;
+  border-radius: 10px;
+  padding: 0 20px;
+}
+
+/* Filter */
+
+.filter-card {
+  margin-bottom: 20px;
+  padding: 20px;
+  border-radius: 16px;
+}
+
+.filters {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.filters mat-form-field {
+  flex: 1;
+  min-width: 250px;
+}
+
+.search-btn {
+  height: 56px;
+  min-width: 140px;
+}
+
+/* Table */
+
+.table-card {
+  padding: 0;
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.mat-mdc-table {
+  border: 1px solid #dbe3ea;
+}
+
+.mat-mdc-header-row {
+  background: #f8fafc;
+}
+
+.mat-mdc-header-cell {
+  text-align: center !important;
+  font-weight: 700;
+  color: #1e293b;
+
+  border: 1px solid #dbe3ea;
+
+  padding: 16px;
+}
+
+.mat-mdc-cell {
+  text-align: center !important;
+
+  border: 1px solid #dbe3ea;
+
+  padding: 14px;
+}
+
+.mat-mdc-row:hover {
+  background: #f8fafc;
+}
+
+/* Status */
+
+.status-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.active-chip {
+  background: #dcfce7 !important;
+  color: #15803d !important;
+}
+
+.inactive-chip {
+  background: #fee2e2 !important;
+  color: #dc2626 !important;
+}
+
+/* Actions */
+
+.actions-cell {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* Loading */
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+}
+
+/* Paginator */
+
+.paginator {
+  margin-top: 16px;
+  border-radius: 12px;
+  overflow: hidden;
+}

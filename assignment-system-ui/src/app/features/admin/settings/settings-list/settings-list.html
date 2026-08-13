@@ -1,0 +1,214 @@
+<div class="page-header">
+  <div>
+    <h2>App Settings</h2>
+    <p>Manage application configuration settings.</p>
+  </div>
+</div>
+
+<!-- Create Setting Card -->
+
+<mat-card class="form-card">
+  <mat-card-header>
+    <mat-card-title>
+      <mat-icon>settings</mat-icon>
+      Add New Setting
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <form
+      [formGroup]="createForm"
+      (ngSubmit)="createSetting()"
+      class="create-form">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Key</mat-label>
+        <input
+          matInput
+          formControlName="key"
+         />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Value</mat-label>
+        <input
+          matInput
+          formControlName="value" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <input
+          matInput
+          formControlName="description" />
+      </mat-form-field>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+         class="submit-btn"
+        [disabled]="submitting()">
+
+        <mat-icon>add</mat-icon>
+        Add Setting
+      </button>
+
+    </form>
+  </mat-card-content>
+</mat-card>
+
+@if (loading()) {
+
+  <div class="loading-container">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+
+} @else {
+
+<mat-card class="table-card">
+
+  <mat-card-header>
+    <mat-card-title>
+      <mat-icon>tune</mat-icon>
+      Settings List
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+
+    <div class="table-container">
+
+      <table
+        mat-table
+        [dataSource]="settings()"
+        class="custom-table">
+
+        <!-- Key -->
+
+        <ng-container matColumnDef="key">
+          <th mat-header-cell *matHeaderCellDef>
+            Key
+          </th>
+
+          <td mat-cell *matCellDef="let s">
+            {{ s.key }}
+          </td>
+        </ng-container>
+
+        <!-- Value -->
+
+        <ng-container matColumnDef="value">
+          <th mat-header-cell *matHeaderCellDef>
+            Value
+          </th>
+
+          <td mat-cell *matCellDef="let s">
+
+            @if (editingKey() === s.key) {
+
+              <input
+                [formControl]="editForm.controls.value"
+                class="inline-input" />
+
+            } @else {
+
+              {{ s.value }}
+
+            }
+
+          </td>
+        </ng-container>
+
+        <!-- Description -->
+
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef>
+            Description
+          </th>
+
+          <td mat-cell *matCellDef="let s">
+
+            @if (editingKey() === s.key) {
+
+              <input
+                [formControl]="editForm.controls.description"
+                class="inline-input" />
+
+            } @else {
+
+              {{ s.description || '—' }}
+
+            }
+
+          </td>
+        </ng-container>
+
+        <!-- Actions -->
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>
+            Actions
+          </th>
+
+          <td mat-cell *matCellDef="let s">
+
+            @if (editingKey() === s.key) {
+
+              <button
+                mat-icon-button
+                color="primary"
+                (click)="saveEdit(s.key)">
+
+                <mat-icon>check</mat-icon>
+              </button>
+
+              <button
+                mat-icon-button
+                (click)="cancelEdit()">
+
+                <mat-icon>close</mat-icon>
+              </button>
+
+            } @else {
+
+              <button
+                mat-icon-button
+                color="primary"
+                (click)="startEdit(s)">
+
+                <mat-icon>edit</mat-icon>
+              </button>
+
+              <button
+                mat-icon-button
+                color="warn"
+                (click)="deleteSetting(s.key)">
+
+                <mat-icon>delete</mat-icon>
+              </button>
+
+            }
+
+          </td>
+        </ng-container>
+
+        <tr
+          mat-header-row
+          *matHeaderRowDef="displayedColumns">
+        </tr>
+
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns;">
+        </tr>
+
+      </table>
+
+    </div>
+
+  </mat-card-content>
+
+</mat-card>
+
+}

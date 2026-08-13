@@ -1,0 +1,312 @@
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px;
+
+  position: relative;
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      135deg,
+      #eef2ff 0%,
+      #f8fafc 50%,
+      #e0f2fe 100%
+    );
+}
+
+
+// ========================================
+// Background Shapes
+// ========================================
+
+.login-background {
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.background-shape {
+  position: absolute;
+
+  border-radius: 50%;
+
+  filter: blur(2px);
+
+  opacity: 0.5;
+}
+
+.shape-one {
+  width: 350px;
+  height: 350px;
+
+  top: -120px;
+  left: -100px;
+
+  background: #c7d2fe;
+}
+
+.shape-two {
+  width: 420px;
+  height: 420px;
+
+  right: -160px;
+  bottom: -160px;
+
+  background: #bae6fd;
+}
+
+
+// ========================================
+// Login Card
+// ========================================
+
+.login-card {
+  width: 100%;
+  max-width: 430px;
+
+  position: relative;
+  z-index: 2;
+
+  padding: 32px;
+
+  border-radius: 18px;
+
+  box-shadow:
+    0 20px 50px rgba(15, 23, 42, 0.12);
+
+  background: rgba(255, 255, 255, 0.96);
+}
+
+
+// ========================================
+// Header
+// ========================================
+
+.login-header {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+
+  text-align: center;
+
+  margin-bottom: 28px;
+
+  padding: 0;
+}
+
+.brand-icon {
+  width: 58px;
+  height: 58px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  margin-bottom: 16px;
+
+  background: #3f51b5;
+
+  color: white;
+
+  box-shadow:
+    0 8px 20px rgba(63, 81, 181, 0.25);
+
+  mat-icon {
+    font-size: 30px;
+
+    width: 30px;
+    height: 30px;
+  }
+}
+
+mat-card-title {
+  font-size: 25px;
+  font-weight: 600;
+
+  color: #1e293b;
+
+  margin-bottom: 6px;
+}
+
+mat-card-subtitle {
+  font-size: 14px;
+
+  color: #64748b;
+}
+
+
+// ========================================
+// Form
+// ========================================
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+
+  gap: 6px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+
+// ========================================
+// Material Fields
+// ========================================
+
+mat-form-field {
+  margin-bottom: 4px;
+}
+
+mat-icon[matPrefix] {
+  margin-right: 8px;
+
+  color: #64748b;
+}
+
+
+// ========================================
+// Password Toggle
+// ========================================
+
+.password-toggle {
+  color: #64748b;
+
+  &:hover {
+    color: #3f51b5;
+  }
+}
+
+
+// ========================================
+// Error Message
+// ========================================
+
+.error-message {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 11px 13px;
+
+  margin: 4px 0 10px;
+
+  border-radius: 8px;
+
+  background: #fef2f2;
+
+  border: 1px solid #fecaca;
+
+  color: #b91c1c;
+
+  font-size: 13px;
+
+  mat-icon {
+    font-size: 20px;
+
+    width: 20px;
+    height: 20px;
+  }
+}
+
+
+// ========================================
+// Login Button
+// ========================================
+
+.login-button {
+  width: 100%;
+
+  height: 48px;
+
+  margin-top: 8px;
+
+  border-radius: 9px;
+
+  font-size: 15px;
+  font-weight: 500;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &:not(:disabled):hover {
+    transform: translateY(-1px);
+
+    box-shadow:
+      0 8px 18px rgba(63, 81, 181, 0.22);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+  mat-spinner {
+    margin: auto;
+  }
+}
+
+
+// ========================================
+// Footer
+// ========================================
+
+.login-footer {
+  display: flex;
+
+  justify-content: center;
+
+  padding: 20px 0 0;
+
+  color: #94a3b8;
+
+  font-size: 12px;
+
+  border-top: 1px solid #f1f5f9;
+
+  margin-top: 24px;
+}
+
+
+// ========================================
+// Responsive
+// ========================================
+
+@media (max-width: 600px) {
+
+  .login-page {
+    padding: 16px;
+  }
+
+  .login-card {
+    padding: 24px 20px;
+
+    border-radius: 14px;
+  }
+
+  mat-card-title {
+    font-size: 22px;
+  }
+
+  .brand-icon {
+    width: 52px;
+    height: 52px;
+  }
+}

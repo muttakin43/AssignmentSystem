@@ -1,0 +1,272 @@
+/* =========================
+   PAGE HEADER
+========================= */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.header h2 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.header p {
+  margin: 5px 0 0;
+  font-size: 14px;
+  opacity: 0.65;
+}
+
+
+/* =========================
+   ASSIGN FORM CARD
+========================= */
+
+.form-card {
+  margin-bottom: 22px;
+  border-radius: 14px;
+}
+
+.form-card mat-card-title {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.assign-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr auto;
+  gap: 16px;
+
+  align-items: start;
+
+  margin-top: 20px;
+}
+
+.assign-form mat-form-field {
+  width: 100%;
+}
+
+.assign-form button {
+  height: 56px;
+  min-width: 155px;
+  border-radius: 28px;
+}
+
+
+/* =========================
+   TABLE CARD
+========================= */
+
+.table-card {
+  border-radius: 14px;
+}
+
+.table-card mat-card-title {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+
+/* =========================
+   TABLE
+========================= */
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 18px;
+}
+
+.assignment-table {
+  width: 100%;
+
+  border: 1px solid #33404d;
+  border-radius: 10px;
+
+  border-collapse: separate;
+  border-spacing: 0;
+
+  overflow: hidden;
+}
+
+
+/* =========================
+   TABLE HEADER
+========================= */
+
+.mat-mdc-header-cell {
+  height: 55px;
+
+  text-align: center;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  border-right: 1px solid #33404d;
+  border-bottom: 1px solid #33404d;
+}
+
+.mat-mdc-header-cell:last-child {
+  border-right: none;
+}
+
+
+/* =========================
+   TABLE BODY
+========================= */
+
+.mat-mdc-cell {
+  height: 68px;
+
+  text-align: center;
+
+  border-right: 1px solid #33404d;
+  border-bottom: 1px solid #33404d;
+
+  font-size: 14px;
+}
+
+.mat-mdc-cell:last-child {
+  border-right: none;
+}
+
+.mat-mdc-row:last-child .mat-mdc-cell {
+  border-bottom: none;
+}
+
+.mat-mdc-row:hover {
+  background: rgba(255, 255, 255, 0.025);
+}
+
+
+/* =========================
+   TEACHER
+========================= */
+
+.teacher-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  font-weight: 600;
+}
+
+.avatar {
+  width: 34px;
+  height: 34px;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(90, 130, 255, 0.15);
+}
+
+.avatar mat-icon {
+  font-size: 20px;
+}
+
+
+/* =========================
+   STATUS BADGE
+========================= */
+
+.status-badge {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-width: 64px;
+  height: 32px;
+
+  padding: 0 12px;
+
+  border-radius: 8px;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  box-sizing: border-box;
+}
+
+
+.status-badge.active {
+  background: #075c3a;
+  color: #ffffff;
+
+  border: 1px solid black;
+}
+
+.status-badge.inactive {
+  background: #641f2a;
+  color: #ffffff;
+
+  border: 1px solid black;
+}
+
+/* =========================
+   ACTION
+========================= */
+
+.actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.actions button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* =========================
+   LOADING
+========================= */
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 50px;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1000px) {
+
+  .assign-form {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .assign-form button {
+    width: 100%;
+  }
+
+}
+
+
+@media (max-width: 650px) {
+
+  .assign-form {
+    grid-template-columns: 1fr;
+  }
+
+  .header h2 {
+    font-size: 22px;
+  }
+
+}
