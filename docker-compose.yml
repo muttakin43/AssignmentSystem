@@ -1,0 +1,51 @@
+# Local development / verification only. Render does not use this file — it builds
+# the Dockerfile and supplies its own managed PostgreSQL via DATABASE_URL.
+#
+#   docker compose up --build
+#   -> API      http://localhost:8080/swagger
+#   -> Postgres localhost:5433  (5433, not 5432, so it does not clash with a
+#                                PostgreSQL installed directly on the host)
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: assignmentsystem-postgres
+    environment:
+      POSTGRES_DB: AssignmentSystem
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgresql
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d AssignmentSystem"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: assignmentsystem-api
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=AssignmentSystem;Username=postgres;Password=postgresql"
+      JwtSettings__SecretKey: "local-dev-only-secret-key-change-me-32+chars"
+      JwtSettings__Issuer: AssignmentSystemAPI
+      JwtSettings__Audience: AssignmentSystemClient
+      JwtSettings__ExpiryMinutes: "120"
+      Cors__AllowedOrigins__0: "http://localhost:4200"
+      FileStorage__RootPath: /app/uploads
+    volumes:
+      - uploads:/app/uploads
+
+volumes:
+  pgdata:
+  uploads:

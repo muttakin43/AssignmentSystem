@@ -21,8 +21,10 @@ namespace AssignmentSystem.Infrastructure
             this IServiceCollection services,
             IConfiguration configuration)
         {
+            var connectionString = PostgresConnectionString.Resolve(configuration);
+
             services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(connectionString));
             services.AddScoped<IAppDbContext>(sp => sp.GetRequiredService<AppDbContext>());
            
             services.AddScoped<IPasswordHasherService, PasswordHasherWrapper>();

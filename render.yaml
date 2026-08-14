@@ -1,0 +1,46 @@
+# Render Blueprint — https://render.com/docs/infrastructure-as-code
+#
+# In the Render dashboard: New > Blueprint, point it at this repository.
+# Two env vars are marked `sync: false` and must be filled in on first deploy:
+#   JwtSettings__SecretKey   a fresh random string, at least 32 characters (HS256)
+#   Cors__AllowedOrigins__0  the frontend origin, e.g. https://your-app.vercel.app
+
+databases:
+  - name: assignmentsystem-db
+    databaseName: assignmentsystem
+    user: assignmentsystem
+    plan: free
+
+services:
+  - type: web
+    name: assignmentsystem-api
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+
+      # Render hands this out as postgres://user:pass@host/db.
+      # PostgresConnectionString.Resolve converts it to Npgsql keyword format.
+      - key: DATABASE_URL
+        fromDatabase:
+          name: assignmentsystem-db
+          property: connectionString
+
+      - key: JwtSettings__SecretKey
+        sync: false
+      - key: JwtSettings__Issuer
+        value: AssignmentSystemAPI
+      - key: JwtSettings__Audience
+        value: AssignmentSystemClient
+      - key: JwtSettings__ExpiryMinutes
+        value: "120"
+
+      - key: Cors__AllowedOrigins__0
+        sync: false
+
+      - key: FileStorage__RootPath
+        value: /app/uploads

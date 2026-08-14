@@ -1,0 +1,36 @@
+# Build output. Excluding obj/ is essential, not cosmetic: a project.assets.json
+# restored by a different local SDK would override the SDK 8 restore in the image.
+**/bin/
+**/obj/
+**/publish/
+**/*.user
+**/*.suo
+
+# Frontend — deployed separately (Vercel), not part of the backend image.
+assignment-system-ui/
+**/node_modules/
+
+# Local-only files
+**/appsettings.Development.json
+logs/
+**/logs/
+.git/
+.gitignore
+.gitattributes
+.vs/
+.vscode/
+**/.vscode/
+.idea/
+
+# Test project is not in the API's reference graph.
+AssignmentSystem.UnitTests/
+
+# Docker / docs — not needed inside the build context.
+Dockerfile
+.dockerignore
+docker-compose.yml
+docker-compose.*.yml
+render.yaml
+README.md
+**/*.md
+**/*.http

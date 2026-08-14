@@ -7,6 +7,7 @@ using AssignmentSystem.Infrastructure.Persistence;
 using AssignmentSystem.Infrastructure.Seed;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -15,6 +16,13 @@ using System.Text;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var port = Environment.GetEnvironmentVariable("PORT");
+if (!string.IsNullOrWhiteSpace(port))
+{
+    builder.WebHost.UseUrls($"http://+:{port}");
+}
+
 //----logging--
 builder.Host.UseSerilog((context, services, configuration) => configuration
     .ReadFrom.Configuration(context.Configuration)
@@ -33,6 +41,8 @@ builder.Services.AddControllers()
 
 builder.Services.AddFluentValidationAutoValidation();
 
+
+builder.Services.AddHealthChecks();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -103,17 +113,26 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto,
+    KnownNetworks = { },
+    KnownProxies = { }
+});
+
 app.UseSerilogRequestLogging();
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 // Configure the HTTP request pipeline.
+app.UseSwagger();
+app.UseSwaggerUI();
+
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseHttpsRedirection();
 }
 
-app.UseHttpsRedirection();
 app.UseCors(CorsPolicyName);
 
 app.UseAuthentication();
@@ -121,12 +140,50 @@ app.UseAuthorization();
 
 
 app.MapControllers();
+app.MapHealthChecks("/health");
+
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
 var logger = services.GetRequiredService<ILogger<Program>>();
 var db = services.GetRequiredService<AppDbContext>();
 var passwordHasher = services.GetRequiredService<IPasswordHasherService>();
 
-await DbInitializer.SeedAsync(db, passwordHasher, logger);
+try
+{
+    logger.LogInformation("Applying database migrations...");
+    await db.Database.MigrateAsync();
+    await DbInitializer.SeedAsync(db, passwordHasher, logger);
+}
+catch (Exception ex)
+{
+    logger.LogCritical(ex, "Database migration or seeding failed — the application cannot start.");
+    throw;
+}
+
+app.Lifetime.ApplicationStarted.Register(() =>
+{
+    var baseUrl = BrowsableBaseUrl(app);
+
+    logger.LogInformation("AssignmentSystem API is ready.");
+    logger.LogInformation("  Swagger UI   -> {Url}", $"{baseUrl}/swagger");
+    logger.LogInformation("  Health check -> {Url}", $"{baseUrl}/health");
+    logger.LogInformation("  API base     -> {Url}", $"{baseUrl}/api");
+});
 
 app.Run();
+
+static string BrowsableBaseUrl(WebApplication app)
+{
+    var external = Environment.GetEnvironmentVariable("RENDER_EXTERNAL_URL");
+    if (!string.IsNullOrWhiteSpace(external))
+        return external.TrimEnd('/');
+
+    var address = app.Urls.FirstOrDefault() ?? "http://localhost:8080";
+
+    return address
+        .Replace("://[::]", "://localhost")
+        .Replace("://0.0.0.0", "://localhost")
+        .Replace("://+", "://localhost")
+        .Replace("://*", "://localhost")
+        .TrimEnd('/');
+}
